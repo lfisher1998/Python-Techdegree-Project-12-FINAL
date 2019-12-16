@@ -1,0 +1,36 @@
+{% extends "layout.html" %}
+{% load static from staticfiles %}
+
+
+{% block content %}
+<div class="circle--actions--bar">
+    <nav class="bounds">
+      <ul class="circle--pill--list">
+          <h2>Applications</h2>
+      </ul>
+    </nav>
+  </div>
+
+  <div class="bounds circle--page">
+    <div class="grid-70">
+      <div class="circle--article--body">
+      {% if applications %}
+        {% for application in applications %}
+          {% if application.status == 'P' %}
+          <p><a href="{% url 'accounts:view_other' pk=application.applicant.profile.id %}">{{ application.applicant }}</a> has applied for the position "{{ application.position }}" in project "<a href="{% url 'create_project:project_detail' project_pk=application.position.project.id %}">{{ application.position.project }}"</a></p>
+          <button><a href="{% url 'create_project:app_status' app_pk=application.pk status='accept' %}">Accept</a></button>
+          <button><a href="{% url 'create_project:app_status' app_pk=application.pk status='reject' %}">Reject</a></button>
+          {% elif application.status == 'A' %}
+          <p>You accepted <a href="{% url 'accounts:view_other' pk=application.applicant.profile.id %}">{{ application.applicant.first_name }} {{ application.applicant.last_name }}'s</a> application for the position "{{ application.position }}" in project "<a href="{% url 'create_project:project_detail' project_pk=application.position.project.id %}">{{ application.position.project }}"!</p>
+          {% elif application.status == 'R' %}
+          <p>You rejected <a href="{% url 'accounts:view_other' pk=application.applicant.profile.id %}">{{ application.applicant }}'s</a> application for the position "{{ application.position }}"!</p>
+          {% endif %}
+          <hr>
+        {% endfor %}
+      {% else %}
+      <p>No one has applied to any position yet!</p>
+      {% endif %}
+      </div>
+    </div>
+  </div>
+{% endblock %}

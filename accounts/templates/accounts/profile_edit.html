@@ -1,0 +1,25 @@
+{% extends "layout.html" %}
+{% load static from staticfiles %}
+{% block content %}
+<div class="circle--actions--bar">
+  <nav class="bounds">
+    <ul class="circle--pill--list">
+      <li><a href="{% url 'create_project:applications' %}">Applications</a></li>
+      <li><a class="selected" href="{% url 'accounts:view' %}">Profile</a></li>
+    </ul>
+  </nav>
+</div>
+<div class="bounds circle--page">
+  <div class="circle--page--header circle--fluid">
+    <div class="circle--fluid--cell circle--fluid--primary">
+      <h2>Edit Profile</h2>
+    </div>
+  </div>
+  <div class="grid-70">
+    <form action="" method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Save changes</button>
+    </form>
+  </div>
+</div>
