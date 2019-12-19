@@ -79,7 +79,7 @@ def apply_position(request, position_pk):
     
     notify.send(
         request.user,
-        recipient=application.applicant,
+        recipient=request.user,
         verb="You applied to {} in project {}".format(
             position.name, project.title
         )
@@ -128,7 +128,7 @@ def app_status(request, app_pk, status):
         )
         notify.send(
             request.user,
-            recipient=project.owner,
+            recipient=request.user,
             verb="You accepted {} for the position {}.".format(
                 application.applicant,
                 application.position.name

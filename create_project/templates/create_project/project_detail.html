@@ -43,6 +43,21 @@
           {% endif %}
         <ul class="circle--group--list">
           {% for position in positions %}
+            {% if position.filled == True %}
+<!--
+                <li>
+                  <h3>{{ position.name }}</h3>
+                  <p>
+                    {{ position.description }}
+                  </p>
+                  <p>
+                    Skill required: {{ position.skill }}
+                  </p>
+                  <p>
+                    Status: Position taken
+                    </p>
+-->
+            {% else %}
             <li>
               <h3>{{ position.name }}</h3>
               <p>
@@ -51,10 +66,14 @@
               <p>
                 Skill required: {{ position.skill }}
               </p>
+              <p>
+                Status: Position open to apply
+                </p>
               {% if request.user != project.owner %}
               <a class="button button-primary" href="{% url 'create_project:apply' position_pk=position.id %}">Apply</a>
               {% endif %}
             </li>
+            {% endif %}
           {% endfor %}
         </ul>
         {% else %}

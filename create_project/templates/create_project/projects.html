@@ -54,7 +54,11 @@
             </td>
             <td class="circle--cell--right">
               {% if project.positions %}
-                {{ project.positions.count }} total positions
+                {% if position.all.filled == True %}
+                    No open positions
+                {% else %}
+                    {{ project.positions.count }} total positions
+                {% endif %}
               {% else %}
                 No open positions
               {% endif %}

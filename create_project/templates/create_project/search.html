@@ -16,10 +16,12 @@
       <div class="circle--article--body">
         {% if projects %}
           {% for project in projects %}
+          {% if position.filled == False %}
             <h3><a href="{% url 'create_project:project_detail' project_pk=project.id %}">{{ project.title }}</a></h3>
             <h4>Project Description:</h4>
             <p>{{ project.description }}</p>
             <hr>
+          {% endif %}
           {% endfor %}
         {% else %}
         <p>There were no results for that search!</p>
