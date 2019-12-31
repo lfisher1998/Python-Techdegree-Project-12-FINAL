@@ -14,18 +14,25 @@
 
     <div class="grid-70">
       <div class="circle--article--body">
-        {% if projects %}
-          {% for project in projects %}
-          {% if position.filled == False %}
-            <h3><a href="{% url 'create_project:project_detail' project_pk=project.id %}">{{ project.title }}</a></h3>
-            <h4>Project Description:</h4>
-            <p>{{ project.description }}</p>
-            <hr>
+          {% if projects %}
+              {% for project in projects %}
+                {% if positions %}
+                    {% for position in positions %}
+                        {% if filled == False %}
+                      <h3><a href="{% url 'create_project:project_detail' project_pk=project.id %}">{{ project.title }}</a></h3>
+                        <h4>Project Description:</h4>
+                        <p>{{ project.description }}</p>
+                        <p>{{ position.name }}</p>
+                        <hr>
+                        {% else %}
+                            <p>There are no open positions for that search!</p>
+                        {% endif %}
+                    {% endfor %}
+                {% endif %}
+              {% endfor %}
+          {% else %}
+            <p>There were no results for that search!</p>
           {% endif %}
-          {% endfor %}
-        {% else %}
-        <p>There were no results for that search!</p>
-        {% endif %}
       </div>
     </div>
   </div>
@@ -44,11 +51,6 @@
           <li><a href="{% url 'create_project:by_skill' skill='wordpress' %}">WordPress Developer</a></li>
           <li><a href="{% url 'create_project:by_skill' skill='ios' %}">iOS Developer</a></li>
         </ul>
-        
       </div>
-    
 </div>
-
-
-
 {% endblock %}

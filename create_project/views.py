@@ -174,6 +174,8 @@ def search(request):
     
 def by_skill(request, skill):
     projects = Project.objects.filter(positions__skill__name=skill)
+    positions = Position.objects.filter(filled=False)
     print("output: {}".format(projects))
-    return render(request, "create_project/search.html", {'projects': projects})
+    return render(request, "create_project/search.html", {'projects': projects,
+                                                          'positions': positions})
     
