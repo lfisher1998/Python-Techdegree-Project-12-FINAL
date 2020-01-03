@@ -148,7 +148,7 @@ def app_status(request, app_pk, status):
         )
         notify.send(
             request.user,
-            recipient=project.owner,
+            recipient=application.applicant,
             verb="You rejected {} for the position {}.".format(
                 request.user,
                 application.position.name
@@ -168,7 +168,10 @@ def delete_project(request, project_pk):
 def search(request):
     search_term = request.GET.get('q')
     projects = Project.objects.filter(
-        Q(title__icontains=search_term) | Q(description__icontains=search_term)
+        Q(title__icontains=search_term) |
+        Q(description__icontains=search_term) |
+        Q(requirements__icontains=search_term) |
+        Q(positions__skill__name__icontains=search_term)
     )
     return render(request, 'create_project/search.html', {'projects': projects})
     
