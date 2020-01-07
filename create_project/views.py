@@ -148,7 +148,7 @@ def app_status(request, app_pk, status):
         )
         notify.send(
             request.user,
-            recipient=application.applicant,
+            recipient=request.user,
             verb="You rejected {} for the position {}.".format(
                 request.user,
                 application.position.name
@@ -172,13 +172,11 @@ def search(request):
         Q(description__icontains=search_term) |
         Q(requirements__icontains=search_term) |
         Q(positions__skill__name__icontains=search_term)
-    )
+    ).distinct()
     return render(request, 'create_project/search.html', {'projects': projects})
     
 def by_skill(request, skill):
-    projects = Project.objects.filter(positions__skill__name=skill)
-    positions = Position.objects.filter(filled=False)
-    print("output: {}".format(projects))
-    return render(request, "create_project/search.html", {'projects': projects,
-                                                          'positions': positions})
+    positions = Position.objects.filter(skill__name=skill).filter(filled=False).distinct()
+    print("output: {}".format(positions))
+    return render(request, "create_project/by_skill.html", {'positions': positions})
     

@@ -3,6 +3,8 @@ from django.contrib.auth.models import User
 from django.db import models
 from django.urls import reverse
 
+from accounts.models import Skill
+
 
 class Project(models.Model):
     owner = models.ForeignKey(settings.AUTH_USER_MODEL)
